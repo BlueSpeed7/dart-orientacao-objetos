@@ -1,14 +1,29 @@
 void main() {
-  Fruta fruta01 = Fruta('laranja', 'amarela', 30.5, 'amarga', 20);
-  Citrica citrica01 = Citrica('limão', 'verde', 20.0, 'ácido', 15, 7.5);
-  Legume legume01 = Legume('pimentão', 'vermelho', 42.3, 25, true);
-  fruta01.estaMadura(30);
-  citrica01.estaMadura(10);
-  print(fruta01.toString());
-  fruta01.fazerSuco();
-  print(citrica01.toString());
-  print(legume01.toString());
-  legume01.cozinhar();
+  Fruta laranja1 = Fruta('laranja', 'amarela', 30.5, 'amarga', 20);
+  Citrica limao1 = Citrica('limão', 'verde', 20.0, 'ácido', 15, 9.0);
+  Legume pimentao1 = Legume('pimentão', 'vermelho', 47.0, 25, true);
+  Noz noz1 = Noz('amendoim', 'marrom', 5.2, 'seco', 10, 70.0);
+  laranja1.estaMadura(30);
+  laranja1.printFruta();
+  laranja1.fazerSuco();
+  limao1.estaMadura(10);
+  limao1.printCitrica();
+  limao1.existeRefri(true);
+  pimentao1.printAlimento();
+  pimentao1.cozinhar();
+  noz1.estaMadura(20);
+  noz1.printNoz();
+}
+
+class Alimento {
+  String nome, cor;
+  double peso;
+
+  Alimento(this.nome, this.cor, this.peso);
+
+  void printAlimento() {
+    print('Este(a) $nome pesa $peso gramas e é $cor.');
+  }
 }
 
 class Fruta extends Alimento {
@@ -17,7 +32,8 @@ class Fruta extends Alimento {
   bool? isMadura;
 
   Fruta(
-      String nome, String cor, double peso, this.sabor, this.diasDesdeColheita)
+      String nome, String cor, double peso, this.sabor, this.diasDesdeColheita,
+      {this.isMadura})
       : super(nome, cor, peso);
 
   bool? estaMadura(int diasParaMadura) {
@@ -29,29 +45,14 @@ class Fruta extends Alimento {
     print('Você fez um ótimo suco de $nome.');
   }
 
-  @override
-  String toString() {
-    String result = '';
+  void printFruta() {
     if (isMadura == false) {
-      result = 'O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas.\n'
-          'Ele(a) foi colhido(a) há $diasDesdeColheita dias e não está maduro(a).';
+      print('O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas.\n'
+          'Ele(a) foi colhido(a) há $diasDesdeColheita dias e não está maduro(a).');
     } else {
-      result = 'O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas.\n'
-          'Ele(a) foi colhido(a) há $diasDesdeColheita dias e está maduro(a).';
+      print('O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas.\n'
+          'Ele(a) foi colhido(a) há $diasDesdeColheita dias e está maduro(a).');
     }
-    return result;
-  }
-}
-
-class Alimento {
-  String nome, cor;
-  double peso;
-
-  Alimento(this.nome, this.cor, this.peso);
-
-  @override
-  String toString() {
-    return 'Este(a) $nome pesa $peso gramas e é $cor.';
   }
 }
 
@@ -79,6 +80,19 @@ class Citrica extends Fruta {
   Citrica(String nome, String cor, double peso, String sabor,
       int diasDesdeColheita, this.nivelAzedo)
       : super(nome, cor, peso, sabor, diasDesdeColheita);
+
+  void existeRefri(bool existe) {
+    if (existe) {
+      print('Existe refrigerante de $nome.');
+    } else {
+      print('Não existe refri de $nome.');
+    }
+  }
+
+  void printCitrica() {
+    print('O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas\n'
+        'e tem $nivelAzedo nível de azedo.');
+  }
 }
 
 class Noz extends Fruta {
@@ -87,4 +101,9 @@ class Noz extends Fruta {
   Noz(String nome, String cor, double peso, String sabor, int diasDesdeColheita,
       this.porcentagemOleoNatural)
       : super(nome, cor, peso, sabor, diasDesdeColheita);
+
+  void printNoz() {
+    print('O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas\n'
+        'e tem $porcentagemOleoNatural% de óleo natural.');
+  }
 }
