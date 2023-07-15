@@ -4,11 +4,11 @@ void main() {
   Legume legume01 = Legume('pimentão', 'vermelho', 42.3, 25, true);
   fruta01.estaMadura(30);
   citrica01.estaMadura(10);
-  print(legume01.cozinhar());
-  print(legume01.cozinhar());
   print(fruta01.toString());
+  fruta01.fazerSuco();
   print(citrica01.toString());
   print(legume01.toString());
+  legume01.cozinhar();
 }
 
 class Fruta extends Alimento {
@@ -23,6 +23,10 @@ class Fruta extends Alimento {
   bool? estaMadura(int diasParaMadura) {
     isMadura ??= diasDesdeColheita >= diasParaMadura;
     return isMadura;
+  }
+
+  void fazerSuco() {
+    print('Você fez um ótimo suco de $nome.');
   }
 
   @override
@@ -59,15 +63,13 @@ class Legume extends Alimento {
       this.isPrecisaCozinhar)
       : super(nome, cor, peso);
 
-  String cozinhar() {
-    String result = '';
+  void cozinhar() {
     if (isPrecisaCozinhar == true) {
-      result = 'Pronto, o(a) $nome está cozinhando.';
+      print('Pronto, o(a) $nome está cozinhando.');
       isPrecisaCozinhar = false;
     } else {
-      result = 'Nem precisa cozinhar.';
+      print('Nem precisa cozinhar.');
     }
-    return result;
   }
 }
 
