@@ -4,15 +4,18 @@ void main() {
   Legume pimentao1 = Legume('pimentão', 'vermelho', 47.0, 25, true);
   Noz noz1 = Noz('amendoim', 'marrom', 5.2, 'seco', 10, 70.0);
   laranja1.estaMadura(30);
-  laranja1.printFruta();
+  laranja1.printAlimento();
   laranja1.fazerSuco();
   limao1.estaMadura(10);
-  limao1.printCitrica();
+  limao1.printAlimento();
   limao1.existeRefri(true);
   pimentao1.printAlimento();
   pimentao1.cozinhar();
   noz1.estaMadura(20);
-  noz1.printNoz();
+  noz1.printAlimento();
+  noz1.separarIngredientes();
+  noz1.fazerMassa();
+  noz1.assar();
 }
 
 class Alimento {
@@ -26,7 +29,7 @@ class Alimento {
   }
 }
 
-class Fruta extends Alimento {
+class Fruta extends Alimento implements Bolo {
   String sabor;
   int diasDesdeColheita;
   bool? isMadura;
@@ -45,7 +48,8 @@ class Fruta extends Alimento {
     print('Você fez um ótimo suco de $nome.');
   }
 
-  void printFruta() {
+  @override
+  void printAlimento() {
     if (isMadura == false) {
       print('O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas.\n'
           'Ele(a) foi colhido(a) há $diasDesdeColheita dias e não está maduro(a).');
@@ -53,6 +57,21 @@ class Fruta extends Alimento {
       print('O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas.\n'
           'Ele(a) foi colhido(a) há $diasDesdeColheita dias e está maduro(a).');
     }
+  }
+
+  @override
+  void separarIngredientes() {
+    print('Separar o(a) $nome.');
+  }
+
+  @override
+  void fazerMassa() {
+    print('Misturar o(a) $nome com farinha, açúcar, ovos e fermento.');
+  }
+
+  @override
+  void assar() {
+    print('Colocar a massa no forno e esperar o bolo ficar pronto.');
   }
 }
 
@@ -89,7 +108,8 @@ class Citrica extends Fruta {
     }
   }
 
-  void printCitrica() {
+  @override
+  void printAlimento() {
     print('O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas\n'
         'e tem $nivelAzedo nível de azedo.');
   }
@@ -102,8 +122,23 @@ class Noz extends Fruta {
       this.porcentagemOleoNatural)
       : super(nome, cor, peso, sabor, diasDesdeColheita);
 
-  void printNoz() {
+  @override
+  void printAlimento() {
     print('O(a) $nome de cor $cor com sabor $sabor pesa $peso gramas\n'
         'e tem $porcentagemOleoNatural% de óleo natural.');
   }
+
+  @override
+  void separarIngredientes() {
+    super.separarIngredientes();
+    print('Tirar a casca do(a) $nome.');
+  }
+}
+
+abstract class Bolo {
+  void separarIngredientes() {}
+
+  void fazerMassa() {}
+
+  void assar() {}
 }
